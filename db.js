@@ -4,7 +4,10 @@ require("dotenv").config();
 
 async function connectDB() {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/mandarake");
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log("✅ MongoDB bağlantısı başarılı");
   } catch (err) {
     console.error("❌ MongoDB bağlantı hatası:", err.message);

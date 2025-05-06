@@ -28,7 +28,6 @@ async function scrapeProducts(maxPages = 10) {
     const products = await page.evaluate(() => {
       const items = [];
       const blocks = document.querySelectorAll(".block[data-itemidx]");
-
       blocks.forEach((block) => {
         const title = block.querySelector(".title a")?.innerText.trim() || "";
         const price = block.querySelector(".price")?.innerText.trim() || "";
@@ -37,7 +36,6 @@ async function scrapeProducts(maxPages = 10) {
         const html = block.outerHTML;
         items.push({ title, price, image, link, html });
       });
-
       return items;
     });
 
@@ -51,32 +49,10 @@ async function scrapeProducts(maxPages = 10) {
       );
 
       if (result.upsertedCount > 0) {
+        console.log("✅ Yeni ürün eklendi ve bildirim gönderiliyor...");
         await sendTelegramNotification(product);
       }
     }
-  }
-
-  // Bu kısmı scraper.js'in sonundaki browser.close() öncesine ekle
-
-  const fakeProduct = {
-    title: "🧪 Test Ürün",
-    price: "999₺",
-    image: "https://example.com/test.jpg",
-    link: "https://example.com/test-urun-123",
-    html: "<div>Test ürünü HTML içeriği</div>",
-  };
-
-  const result = await Product.updateOne(
-    { link: fakeProduct.link },
-    { $setOnInsert: fakeProduct },
-    { upsert: true }
-  );
-
-  if (result.upsertedCount > 0) {
-    await sendTelegramNotification(fakeProduct);
-    console.log("✅ Test ürünü eklendi ve bildirim gönderildi.");
-  } else {
-    console.log("ℹ️ Test ürünü zaten mevcut, bildirim gönderilmedi.");
   }
 
   await browser.close();

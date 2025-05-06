@@ -6,13 +6,15 @@ const Product = require("./models/Product");
 require("dotenv").config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
+// MongoDB bağlantısı
 connectDB();
 
+// Ana endpoint
 app.get("/products", async (req, res) => {
   try {
-    await scrapeProducts(10);
+    await scrapeProducts(10); // İlk 10 sayfayı tara
     const products = await Product.find({});
     res.json(products);
   } catch (error) {
@@ -24,10 +26,12 @@ app.get("/products", async (req, res) => {
   }
 });
 
-app.get("/hello", (req, res) => {
-  res.send("Hello World");
+// Basit test endpointi
+app.get("/", (req, res) => {
+  res.send("🚀 Mandarake Scraper API Çalışıyor!");
 });
 
+// Sunucu başlat
 app.listen(PORT, () => {
   console.log(`🚀 Server is running at http://localhost:${PORT}`);
 });
