@@ -35,3 +35,10 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server is running at http://localhost:${PORT}`);
 });
+const cron = require("node-cron");
+
+// ⏰ Her 15 dakikada bir scraper çalışsın
+cron.schedule("*/15 * * * *", async () => {
+  console.log("⏰ Otomatik tarama başlatılıyor...");
+  await scrapeProducts(10); // İstersen sayfa sayısını artır
+});
