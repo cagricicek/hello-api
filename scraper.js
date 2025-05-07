@@ -8,7 +8,7 @@ async function scrapeProducts(maxPages = 10) {
   const browser = await puppeteer.launch({
     headless: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    executablePath: "/usr/bin/chromium-browser", // Render'da yüklediğimiz path
+    executablePath: "/usr/bin/chromium", // Render'da yüklediğimiz path
   });
 
   const page = await browser.newPage();
