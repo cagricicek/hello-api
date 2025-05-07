@@ -6,9 +6,9 @@ const BASE_URL = "https://order.mandarake.co.jp/order/listPage/list?page=";
 
 async function scrapeProducts(maxPages = 10) {
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: "new",
+    executablePath: "/usr/bin/chromium", // ✅ Render uyumlu yol
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    executablePath: "/usr/bin/chromium", // Render'da yüklediğimiz path
   });
 
   const page = await browser.newPage();
