@@ -1,4 +1,3 @@
-// utils/notify.js
 const axios = require("axios");
 require("dotenv").config();
 
@@ -7,10 +6,9 @@ const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 async function sendTelegramNotification(product) {
   const message = `🆕 Yeni Ürün Eklendi:
-
-📦 *${product.title}*
+📦 ${product.title}
 💰 ${product.price}
-🔗 [Ürün Linki](${product.link})`;
+🔗 ${product.link}`;
 
   try {
     await axios.post(
@@ -18,10 +16,9 @@ async function sendTelegramNotification(product) {
       {
         chat_id: TELEGRAM_CHAT_ID,
         text: message,
-        parse_mode: "Markdown",
       }
     );
-    console.log("📤 Telegram bildirimi gönderildi.");
+    console.log("📤 Telegram bildirimi gönderildi");
   } catch (error) {
     console.error("❌ Telegram bildirimi hatası:", error.message);
   }
