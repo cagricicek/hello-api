@@ -5,7 +5,13 @@ const sendTelegramNotification = require("./utils/notify");
 const BASE_URL = "https://order.mandarake.co.jp/order/listPage/list?page=";
 
 async function scrapeProducts(maxPages = 10) {
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    executablePath:
+      process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/google-chrome",
+  });
+
   const page = await browser.newPage();
 
   for (let pageNum = 1; pageNum <= maxPages; pageNum++) {
