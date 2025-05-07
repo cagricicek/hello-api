@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: hello-api
+    env: node
+    plan: free
+    buildCommand: bash install.sh && npm install
+    startCommand: node index.js
+    branch: main
+    autoDeploy: true
